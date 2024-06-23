@@ -41,14 +41,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.2"
-  bip340:
-    dependency: transitive
-    description:
-      name: bip340
-      sha256: b7bcd70a860e605046006adaa72bc4f7453f4d31d7ba74a4ad9d5de387a0fc0b
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.3.0"
   bloc:
     dependency: transitive
     description:
@@ -248,14 +240,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  hex:
-    dependency: transitive
-    description:
-      name: hex
-      sha256: "4e7cd54e4b59ba026432a6be2dd9d96e4c5205725194997193bf871703b82c4a"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.2.0"
   hive:
     dependency: transitive
     description:
@@ -304,14 +288,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.19.0"
-  js:
-    dependency: transitive
-    description:
-      name: js
-      sha256: c1b2e9b5ea78c45e1a0788d29606ba27dc5f71f019f32ca5140f61ef071838cf
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.7.1"
   leak_tracker:
     dependency: transitive
     description:
@@ -400,14 +376,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.5.0"
-  nwc:
-    dependency: "direct main"
-    description:
-      name: nwc
-      sha256: "3a0175bd7ea236cc9d88a4445d034b808c72086f84a1c868b79fcc78b12cacf7"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.1"
   path:
     dependency: "direct main"
     description:
@@ -504,14 +472,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
-  pointycastle:
-    dependency: transitive
-    description:
-      name: pointycastle
-      sha256: "4be0097fcf3fd3e8449e53730c631200ebc7b88016acecab2b0da2f0149222fe"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.9.1"
   provider:
     dependency: transitive
     description:
@@ -741,14 +701,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.5.1"
-  web_socket_channel:
-    dependency: transitive
-    description:
-      name: web_socket_channel
-      sha256: "58c6666b342a38816b2e7e50ed0f1e261959630becd4c879c4f26bfa14aa5a42"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.4.5"
   win32:
     dependency: transitive
     description:

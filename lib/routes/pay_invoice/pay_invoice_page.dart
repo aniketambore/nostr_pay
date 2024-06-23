@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nwc/nwc.dart';
-import 'package:nostr_pay/bloc/nwc_account/nwc_account_cubit.dart';
-import 'package:nostr_pay/bloc/nwc_account/nwc_account_state.dart';
-import 'package:nostr_pay/component_library/component_library.dart';
-import 'package:nostr_pay/models/decoded_invoice.dart';
-import 'package:nostr_pay/routes/payment_dialogs/payment_request_dialog.dart';
+import 'package:nwc_app_final/bloc/nwc_account/nwc_account_cubit.dart';
+import 'package:nwc_app_final/bloc/nwc_account/nwc_account_state.dart';
+import 'package:nwc_app_final/component_library/component_library.dart';
+import 'package:nwc_app_final/models/decoded_invoice.dart';
+import 'package:nwc_app_final/routes/payment_dialogs/payment_request_dialog.dart';
 
 class PayInvoicePage extends StatefulWidget {
   const PayInvoicePage({super.key});

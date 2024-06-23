@@ -1,6 +1,6 @@
 {
-    "name": "nostr_pay",
-    "short_name": "nostr_pay",
+    "name": "nwc_app_final",
+    "short_name": "nwc_app_final",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

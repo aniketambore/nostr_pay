@@ -1,9 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nostr_pay/bloc/nwc_account/nwc_account_cubit.dart';
-import 'package:nostr_pay/bloc/nwc_account/nwc_account_state.dart';
-import 'package:nostr_pay/component_library/component_library.dart';
+import 'package:nwc_app_final/bloc/nwc_account/nwc_account_cubit.dart';
+import 'package:nwc_app_final/bloc/nwc_account/nwc_account_state.dart';
+import 'package:nwc_app_final/component_library/component_library.dart';
 
 class WalletDetailsDialog extends StatelessWidget {
   const WalletDetailsDialog({super.key});

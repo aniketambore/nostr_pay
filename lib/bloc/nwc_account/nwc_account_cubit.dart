@@ -7,9 +7,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_fgbg/flutter_fgbg.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:nwc/nwc.dart';
-import 'package:nostr_pay/bloc/nwc_account/nwc_account_state.dart';
-import 'package:nostr_pay/models/decoded_invoice.dart';
+import 'package:nwc_app_final/bloc/nwc_account/nwc_account_state.dart';
+import 'package:nwc_app_final/models/decoded_invoice.dart';
 import 'package:rxdart/rxdart.dart';
 
 import 'nwc_credentials_manager.dart';
@@ -18,15 +17,16 @@ import 'nwc_payment_result.dart';
 const syncInterval = 60;
 
 class NWCAccountCubit extends Cubit<NWCAccountState> with HydratedMixin {
-  final NWC _nwc;
+  // TODO: Instance of the Nostr Wallet Connect class
+  final dynamic _nwc;
 
   final NWCCredentialsManager _credentialsManager;
 
-  final BehaviorSubject<Get_Balance_Result?> _walletBalanceController =
-      BehaviorSubject<Get_Balance_Result?>();
+  // TODO: Change balance controller and stream type to Get_Balance_Result
+  final BehaviorSubject<dynamic> _walletBalanceController =
+      BehaviorSubject<dynamic>();
 
-  Stream<Get_Balance_Result?> get walletBalanceStream =>
-      _walletBalanceController.stream;
+  Stream<dynamic> get walletBalanceStream => _walletBalanceController.stream;
 
   // Stream controller for handling payment result events.
   final StreamController<NWCPaymentResult> _paymentResultStreamController =
@@ -36,7 +36,6 @@ class NWCAccountCubit extends Cubit<NWCAccountState> with HydratedMixin {
   Stream<NWCPaymentResult> get paymentResultStream =>
       _paymentResultStreamController.stream;
 
-  // Number format for balance display
   final formatter = NumberFormat('#,##,000');
 
   NWCAccountCubit(this._nwc, this._credentialsManager)
@@ -44,27 +43,20 @@ class NWCAccountCubit extends Cubit<NWCAccountState> with HydratedMixin {
     // Hydrate the state from the stored data.
     hydrate();
 
-    _watchAccountChanges().listen((acc) {
-      debugPrint('State changed: $acc');
-      emit(acc);
-    });
+    // TODO: Listen to account changes and emit updated state
 
-    _nwc.loggerUtils.disableLogs();
+    // TODO: Disable unnecessary logs from the logger utils
 
-    if (state.type != NWCConnectTypes.none) connect();
+    // TODO: Connect if the current state type is not none
   }
 
   Stream<NWCAccountState> _watchAccountChanges() {
-    return Rx.combineLatest<Get_Balance_Result?, NWCAccountState>(
-        [walletBalanceStream], (values) {
-      if (values.first != null) {
-        return assembleNWCAccountState(
-              values.first!.balance,
-              values.first!.maxAmount ?? 0,
-              state,
-            ) ??
-            state;
-      }
+    // TODO: Update the types to match the actual data type
+    return Rx.combineLatest<dynamic, NWCAccountState>([walletBalanceStream],
+        (values) {
+      // TODO: Check if wallet balance result is not null
+
+      // Return the current state if balance result is null
       return state;
     });
   }
@@ -77,17 +69,13 @@ class NWCAccountCubit extends Cubit<NWCAccountState> with HydratedMixin {
     debugPrint(
         "connect new wallet: ${connectionURI != null}, restored: $restored");
     if (connectionURI != null) {
-      final parsedUri = _nwc.nip47.parseNostrConnectUri(connectionURI);
-      final myPubkey =
-          _nwc.keysService.derivePublicKey(privateKey: parsedUri.secret);
-      await _credentialsManager.storeSecret(secret: parsedUri.secret);
-      emit(state.copyWith(
-        type: type,
-        walletPubkey: parsedUri.pubkey,
-        myPubkey: myPubkey,
-        relay: parsedUri.relay,
-        lud16: parsedUri.lud16,
-      ));
+      // TODO: Parse the Nostr Connect URI
+
+      // TODO: Derive the public key from the parsed URI secret
+
+      // TODO: Store the secret using the credentials manager
+
+      // TODO: Emit the new state with the updated properties
     }
 
     await _checkAndHandleConnection();
@@ -100,7 +88,6 @@ class NWCAccountCubit extends Cubit<NWCAccountState> with HydratedMixin {
     if (state.connectionStatus == ConnectionStatus.DISCONNECTED) {
       StreamSubscription<List<ConnectivityResult>>? subscription;
       subscription = Connectivity().onConnectivityChanged.listen((event) async {
-        // we should try fetch the selected lsp information when internet is back.
         if (event.contains(ConnectivityResult.none) &&
             state.connectionStatus == ConnectionStatus.DISCONNECTED) {
           await _initializeConnection();
@@ -117,85 +104,16 @@ class NWCAccountCubit extends Cubit<NWCAccountState> with HydratedMixin {
 
   Future<void> _initializeConnection() async {
     emit(state.copyWith(connectionStatus: ConnectionStatus.CONNECTING));
-    await _nwc.relaysService.init(relaysUrl: [state.relay]);
 
-    final subToFilter = Request(
-      filters: [
-        Filter(
-          kinds: const [23195],
-          authors: [state.walletPubkey],
-          since: DateTime.now(),
-        )
-      ],
-    );
+    // TODO: Initialize the relays service with the relay URL
 
-    final nostrStream = _nwc.relaysService.startEventsSubscription(
-      request: subToFilter,
-      onEose: (relay, eose) =>
-          debugPrint('subscriptionId: ${eose.subscriptionId}, relay: $relay'),
-    );
+    // TODO: Create a subscription filter for events
 
-    final secret = await _credentialsManager.restoreSecret();
+    // TODO: Start the events subscription using the relays service
 
-    nostrStream.stream.listen((Event event) {
-      debugPrint("Listenning");
-      if (event.kind == 23195 && event.content != null) {
-        final decryptedContent = _nwc.nip04.decrypt(
-          secret,
-          state.walletPubkey,
-          event.content!,
-        );
+    // TODO: Restore the secret from the credentials manager
 
-        debugPrint('Content: $decryptedContent');
-
-        final content = _nwc.nip47.parseResponseResult(decryptedContent);
-
-        if (content.resultType == NWCResultType.get_balance) {
-          final balanceResult = content.result as Get_Balance_Result;
-          _walletBalanceController.add(balanceResult);
-          debugPrint('balance: ${balanceResult.balance}');
-        } else if (content.resultType == NWCResultType.make_invoice) {
-          final invoiceResult = content.result as Make_Invoice_Result;
-          debugPrint('invoice: ${invoiceResult.invoice}');
-          emit(
-            state.copyWith(
-              resultType: NWCResultType.make_invoice,
-              makeInvoiceResult: invoiceResult,
-            ),
-          );
-        } else if (content.resultType == NWCResultType.pay_invoice) {
-          final invoiceResult = content.result as Pay_Invoice_Result;
-          debugPrint('preimage: ${invoiceResult.preimage}');
-          _paymentResultStreamController.add(
-            NWCPaymentResult(
-              resultType: NWCResultType.pay_invoice,
-              payInvoiceResult: invoiceResult,
-            ),
-          );
-          emit(
-            state.copyWith(
-              resultType: NWCResultType.pay_invoice,
-              payInvoiceResult: invoiceResult,
-            ),
-          );
-        } else if (content.resultType == NWCResultType.lookup_invoice) {
-          final result = content.result as Lookup_Invoice_Result;
-          debugPrint(
-              'Invoice paid: ${result.settledAt != null ? true : false}');
-          emit(state.copyWith(
-            resultType: NWCResultType.lookup_invoice,
-            lookupInvoiceResult: result,
-          ));
-        } else if (content.resultType == NWCResultType.error) {
-          final error = content.result as NWC_Error_Result;
-          debugPrint('error message: ${error.errorMessage}');
-          emit(state.copyWith(
-            resultType: NWCResultType.error,
-            nwcErrorResponse: error,
-          ));
-        }
-      }
-    });
+    // TODO: Listen to the nostr stream for events
 
     emit(state.copyWith(connectionStatus: ConnectionStatus.CONNECTED));
   }
@@ -207,7 +125,7 @@ class NWCAccountCubit extends Cubit<NWCAccountState> with HydratedMixin {
     FGBGEvents.stream.listen((event) async {
       if (event == FGBGType.foreground &&
           DateTime.now().difference(lastSync).inSeconds > syncInterval) {
-        await _sync();
+        await refresh();
         lastSync = DateTime.now();
       }
     });
@@ -220,9 +138,9 @@ class NWCAccountCubit extends Cubit<NWCAccountState> with HydratedMixin {
   Future<void> _sync() async {
     debugPrint('sync');
 
-    // Message 1: Get Balance
-    final balanceMessage = {"method": "get_balance"};
-    await _sentToRelay(balanceMessage);
+    // TODO: Define a message to request balance
+
+    // TODO: Call the _sentToRelay function to send the balance message
   }
 
   Future<void> makeInvoice({
@@ -235,69 +153,36 @@ class NWCAccountCubit extends Cubit<NWCAccountState> with HydratedMixin {
 
     debugPrint("makeInvoice: $desc, $amountInSats");
 
-    final req = {
-      "method": "make_invoice",
-      "params": {
-        "amount": amountInSats * 1000, // value in msats
-        "description": desc, // invoice's description, optional
-      }
-    };
+    // TODO: Construct the request object for making an invoice
 
-    await _sentToRelay(req);
+    // TODO: Send the request to the relay using _sentToRelay
   }
 
   Future<void> payInvoice(String invoice) async {
     debugPrint('Pay invoice: $invoice');
 
-    final message = {
-      "method": "pay_invoice",
-      "params": {
-        "invoice": invoice,
-      }
-    };
+    // TODO: Construct the message to pay the invoice
 
-    await _sentToRelay(message);
+    // TODO: Send the payment request to the relay using _sentToRelay
   }
 
   Future<void> lookupInvoice(String invoice) async {
     debugPrint('Lookup invoice: $invoice');
 
-    final message = {
-      "method": "lookup_invoice",
-      "params": {
-        "invoice": invoice,
-      }
-    };
+    // TODO: Construct the message to lookup the invoice
 
-    await _sentToRelay(message);
+    // TODO: Send the lookup request to the relay using _sentToRelay
   }
 
   Future<void> _sentToRelay(Map message) async {
     debugPrint('_sentToRelay()');
-    final secret = await _credentialsManager.restoreSecret();
+    // TODO: Restore the secret from the credentials manager
 
-    final content = _nwc.nip04.encrypt(
-      secret,
-      state.walletPubkey,
-      jsonEncode(message),
-    );
+    // TODO: Encrypt the message using NIP04
 
-    final request = Event.fromPartialData(
-      kind: 23194,
-      content: content,
-      tags: [
-        ['p', state.walletPubkey]
-      ],
-      createdAt: DateTime.now(),
-      keyPairs: KeyPairs(private: secret),
-    );
+    // TODO: Create an event request with the encrypted content
 
-    final okCommand = await _nwc.relaysService.sendEventToRelays(
-      request,
-      timeout: const Duration(seconds: 3),
-    );
-
-    debugPrint('okCommand: $okCommand');
+    // TODO: Send the event to relays with a timeout
   }
 
   String formatBalance(int balance) {

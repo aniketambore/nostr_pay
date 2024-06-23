@@ -24,7 +24,7 @@ if (flutterVersionName == null) {
 }
 
 android {
-    namespace = "com.example.nostr_pay"
+    namespace = "com.example.nwc_app_final"
     compileSdk = 34
     ndkVersion = flutter.ndkVersion
 

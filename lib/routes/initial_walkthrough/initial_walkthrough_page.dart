@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nostr_pay/bloc/nwc_account/nwc_account_cubit.dart';
-import 'package:nostr_pay/bloc/nwc_account/nwc_account_state.dart';
-import 'package:nostr_pay/component_library/component_library.dart';
+import 'package:nwc_app_final/bloc/nwc_account/nwc_account_cubit.dart';
+import 'package:nwc_app_final/bloc/nwc_account/nwc_account_state.dart';
+import 'package:nwc_app_final/component_library/component_library.dart';
 
 class InitialWalkthroughPage extends StatefulWidget {
   const InitialWalkthroughPage({super.key});
@@ -108,20 +108,19 @@ class _InitialWalkthroughPageState extends State<InitialWalkthroughPage> {
   }
 
   Future<void> connect(String connectionURI) async {
-    final cubit = context.read<NWCAccountCubit>();
+    // TODO: Access NWCAccountCubit instance from context
+
     final navigator = Navigator.of(context);
     var loaderRoute = createLoaderRoute(context);
     navigator.push(loaderRoute);
 
     try {
+      // Simulate a delay for demonstration purposes.
       await Future.delayed(const Duration(seconds: 3), () async {
-        await cubit.connect(
-          connectionURI: connectionURI,
-          type: NWCConnectTypes.nwc,
-        );
+        // TODO: Call the connect method on NWCAccountCubit
       });
 
-      navigator.pushReplacementNamed('/');
+      // TODO: Replace the current route with the home screen
     } catch (error) {
       debugPrint('Error: $error');
       showToast(
@@ -130,13 +129,12 @@ class _InitialWalkthroughPageState extends State<InitialWalkthroughPage> {
         type: ToastificationType.error,
       );
     } finally {
+      // Remove the loader route from the navigator stack.
       navigator.removeRoute(loaderRoute);
     }
   }
 
   bool _validateUri(String value) {
-    _setValidatorErrorMessage('');
-
     if (value.isEmpty) {
       _setValidatorErrorMessage('URI cannot be empty');
       return false;

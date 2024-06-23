@@ -1,5 +1,5 @@
-name: nostr_pay
-description: "Connect to remote Lightning wallets using the NWC protocol."
+name: nwc_app_final
+description: "A new Flutter project."
 publish_to: 'none'
 version: 0.1.0
 
@@ -7,10 +7,8 @@ environment:
   sdk: '>=3.4.1 <4.0.0'
 
 dependencies:
-  flutter:
-    sdk: flutter
+  # TODO: Add NWC package here
   flutter_bloc: ^8.1.5
-  nwc: ^1.0.1
   flutter_secure_storage: ^4.2.1
   flutter_svg: ^2.0.10+1
   hydrated_bloc: ^9.1.5
@@ -26,6 +24,8 @@ dependencies:
   bolt11_decoder: ^1.0.2
   auto_size_text: ^3.0.0
   lottie: ^3.1.2
+  flutter:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:

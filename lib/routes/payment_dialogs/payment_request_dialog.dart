@@ -1,9 +1,11 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nostr_pay/bloc/nwc_account/nwc_account_cubit.dart';
-import 'package:nostr_pay/models/decoded_invoice.dart';
-import 'package:nostr_pay/routes/payment_dialogs/payment_confirmation_dialog.dart';
-import 'package:nostr_pay/routes/payment_dialogs/processing_payment_dialog.dart';
+import 'package:nwc_app_final/bloc/nwc_account/nwc_account_cubit.dart';
+import 'package:nwc_app_final/models/decoded_invoice.dart';
+import 'package:nwc_app_final/routes/payment_dialogs/payment_confirmation_dialog.dart';
+import 'package:nwc_app_final/routes/payment_dialogs/processing_payment_dialog.dart';
 
 enum PaymentRequestState {
   PAYMENT_REQUEST,
@@ -66,9 +68,10 @@ class _PaymentRequestDialogState extends State<PaymentRequestDialog> {
   Widget showPaymentRequestDialog() {
     if (_state == PaymentRequestState.PROCESSING_PAYMENT) {
       return ProcessingPaymentDialog(
-        paymentFunc: () => accountCubit.payInvoice(
-          widget.invoice.bolt11,
-        ),
+        paymentFunc: () {
+          // TODO: Call the payInvoice method on accountCubit with the invoice bolt11
+          return Future.value(0);
+        },
         onStateChange: (state) => _onStateChange(state),
       );
     } else {

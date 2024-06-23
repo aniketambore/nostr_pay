@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nostr_pay/bloc/nwc_account/nwc_account_cubit.dart';
-import 'package:nostr_pay/bloc/nwc_account/nwc_account_state.dart';
-import 'package:nostr_pay/component_library/component_library.dart';
-import 'package:nostr_pay/handlers/handler.dart';
-import 'package:nostr_pay/handlers/handler_context_provider.dart';
-import 'package:nostr_pay/handlers/payment_result_handler.dart';
-import 'package:nostr_pay/routes/home/wallet_details_dialog.dart';
+import 'package:nwc_app_final/bloc/nwc_account/nwc_account_cubit.dart';
+import 'package:nwc_app_final/bloc/nwc_account/nwc_account_state.dart';
+import 'package:nwc_app_final/component_library/component_library.dart';
+import 'package:nwc_app_final/handlers/handler.dart';
+import 'package:nwc_app_final/handlers/handler_context_provider.dart';
+import 'package:nwc_app_final/handlers/payment_result_handler.dart';
+import 'package:nwc_app_final/routes/home/wallet_details_dialog.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> with HandlerContextProvider {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final accountCubit = context.read<NWCAccountCubit>();
+    // TODO: Read NWCAccountCubit instance from context
 
     return Scaffold(
       backgroundColor: NWCColors.white,
@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> with HandlerContextProvider {
           builder: (context, state) {
         return RefreshIndicator(
           onRefresh: () async {
-            await accountCubit.refresh();
+            // TODO: Call the refresh method on accountCubit to refresh data
           },
           child: ListView(
             children: [
@@ -82,7 +82,8 @@ class _HomePageState extends State<HomePage> with HandlerContextProvider {
                                     ?.copyWith(color: NWCColors.woodSmoke),
                               ),
                               Text(
-                                '${accountCubit.formatBalance(state.balance)} sats',
+                                // TODO: Format the balance using the formatBalance method on accountCubit
+                                '${state.balance} sats',
                                 style: textTheme.headlineLarge
                                     ?.copyWith(color: NWCColors.woodSmoke),
                               ),

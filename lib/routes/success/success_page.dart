@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:nostr_pay/component_library/component_library.dart';
+import 'package:nwc_app_final/component_library/component_library.dart';
 
 class SuccessPage extends StatelessWidget {
   const SuccessPage({

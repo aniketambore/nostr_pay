@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nostr_pay/bloc/nwc_account/nwc_account_cubit.dart';
-import 'package:nostr_pay/bloc/nwc_account/nwc_account_state.dart';
-import 'package:nostr_pay/component_library/component_library.dart';
-import 'package:nostr_pay/routes/create_invoice/create_invoice_page.dart';
-import 'package:nostr_pay/routes/home/home_page.dart';
-import 'package:nostr_pay/routes/initial_walkthrough/initial_walkthrough_page.dart';
-import 'package:nostr_pay/routes/pay_invoice/pay_invoice_page.dart';
-import 'package:nostr_pay/routes/splash/splash_page.dart';
+import 'package:nwc_app_final/bloc/nwc_account/nwc_account_cubit.dart';
+import 'package:nwc_app_final/bloc/nwc_account/nwc_account_state.dart';
+import 'package:nwc_app_final/component_library/component_library.dart';
+import 'package:nwc_app_final/routes/create_invoice/create_invoice_page.dart';
+import 'package:nwc_app_final/routes/home/home_page.dart';
+import 'package:nwc_app_final/routes/initial_walkthrough/initial_walkthrough_page.dart';
+import 'package:nwc_app_final/routes/pay_invoice/pay_invoice_page.dart';
+import 'package:nwc_app_final/routes/splash/splash_page.dart';
 
 class NWCApp extends StatelessWidget {
   final _lightTheme = LightNWCThemeData();

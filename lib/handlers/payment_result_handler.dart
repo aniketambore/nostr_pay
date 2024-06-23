@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nwc/nwc.dart';
-import 'package:nostr_pay/bloc/nwc_account/nwc_account_cubit.dart';
-import 'package:nostr_pay/bloc/nwc_account/nwc_payment_result.dart';
-import 'package:nostr_pay/handlers/handler.dart';
-import 'package:nostr_pay/routes/success/success_page.dart';
+import 'package:nwc_app_final/bloc/nwc_account/nwc_account_cubit.dart';
+import 'package:nwc_app_final/bloc/nwc_account/nwc_payment_result.dart';
+import 'package:nwc_app_final/handlers/handler.dart';
+import 'package:nwc_app_final/routes/success/success_page.dart';
 import 'package:rxdart/rxdart.dart';
 
 import 'handler_context_provider.dart';

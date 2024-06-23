@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nwc/nwc.dart';
-import 'package:nostr_pay/bloc/nwc_account/nwc_account_cubit.dart';
-import 'package:nostr_pay/bloc/nwc_account/nwc_account_state.dart';
-import 'package:nostr_pay/component_library/component_library.dart';
-import 'package:nostr_pay/routes/success/success_page.dart';
-import 'package:nostr_pay/services/device.dart';
+import 'package:nwc_app_final/bloc/nwc_account/nwc_account_cubit.dart';
+import 'package:nwc_app_final/bloc/nwc_account/nwc_account_state.dart';
+import 'package:nwc_app_final/component_library/component_library.dart';
+import 'package:nwc_app_final/routes/success/success_page.dart';
+import 'package:nwc_app_final/services/device.dart';
 
 class InvoiceQrPage extends StatefulWidget {
   const InvoiceQrPage({
@@ -37,9 +37,11 @@ class _InvoiceQrPageState extends State<InvoiceQrPage> {
   }
 
   void _startPolling() {
-    final cubit = context.read<NWCAccountCubit>();
+    // TODO: Access NWCAccountCubit instance from context
+
+    // Start a periodic timer to poll for invoice lookup.
     _timer = Timer.periodic(const Duration(seconds: 2), (timer) async {
-      await cubit.lookupInvoice(widget.makeInvoiceResult.invoice);
+      // TODO: Call the lookupInvoice method on NWCAccountCubit with the invoice ID
     });
   }
 
@@ -57,30 +59,10 @@ class _InvoiceQrPageState extends State<InvoiceQrPage> {
           listener: (context, state) {
         final resultType = state.resultType;
         final result = state.lookupInvoiceResult;
-        if (resultType == NWCResultType.lookup_invoice && result != null) {
-          final isPaid = result.settledAt != null ? true : false;
-          if (isPaid) {
-            final navigator = Navigator.of(context);
-            navigator.popUntil((route) => route.settings.name == "/");
-            navigator.push(
-              MaterialPageRoute(
-                builder: (_) => const SuccessPage(
-                  title: 'Payment Received Successfully',
-                  description:
-                      'Congratulations! You have successfully received sats from the sender.',
-                ),
-              ),
-            );
-          }
-        } else if (resultType == NWCResultType.error &&
-            state.nwcErrorResponse != null) {
-          final errorMessage = state.nwcErrorResponse!.errorMessage;
-          showToast(
-            context,
-            title: errorMessage,
-            type: ToastificationType.error,
-          );
-        }
+
+        // TODO: Handle the case when the result type is 'lookup_invoice' and the result is not null
+
+        // TODO: Handle the case when the result type is 'error' and the nwcErrorResponse is not null
       }, builder: (context, state) {
         return Stack(
           children: [

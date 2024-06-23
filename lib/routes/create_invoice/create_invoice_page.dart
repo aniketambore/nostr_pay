@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nwc/nwc.dart';
-import 'package:nostr_pay/bloc/nwc_account/nwc_account_cubit.dart';
-import 'package:nostr_pay/bloc/nwc_account/nwc_account_state.dart';
-import 'package:nostr_pay/component_library/component_library.dart';
-import 'package:nostr_pay/routes/invoice_qr/invoice_qr_page.dart';
+import 'package:nwc_app_final/bloc/nwc_account/nwc_account_cubit.dart';
+import 'package:nwc_app_final/bloc/nwc_account/nwc_account_state.dart';
+import 'package:nwc_app_final/component_library/component_library.dart';
+import 'package:nwc_app_final/routes/invoice_qr/invoice_qr_page.dart';
 
 class CreateInvoicePage extends StatefulWidget {
   const CreateInvoicePage({super.key});
@@ -29,31 +29,13 @@ class _CreateInvoicePageState extends State<CreateInvoicePage> {
       backgroundColor: NWCColors.white,
       appBar: const TitleOnlyAppBar(title: 'Receive'),
       body: BlocConsumer<NWCAccountCubit, NWCAccountState>(
+        // TODO: Take a look at the listener
         listener: (context, state) {
           final resultType = state.resultType;
 
-          if (resultType != null &&
-              resultType == NWCResultType.make_invoice &&
-              state.makeInvoiceResult != null) {
-            final navigator = Navigator.of(context);
-            navigator.popUntil((route) => route.settings.name == "/");
+          // TODO: Handle the case when the result type is 'make_invoice' and the makeInvoiceResult is not null
 
-            navigator.push(
-              MaterialPageRoute(
-                builder: (context) => InvoiceQrPage(
-                  makeInvoiceResult: state.makeInvoiceResult!,
-                ),
-              ),
-            );
-          } else if (resultType == NWCResultType.error &&
-              state.nwcErrorResponse != null) {
-            final errorMessage = state.nwcErrorResponse!.errorMessage;
-            showToast(
-              context,
-              title: errorMessage,
-              type: ToastificationType.error,
-            );
-          }
+          // TODO: Handle the case when the result type is 'error' and the nwcErrorResponse is not null
         },
         builder: (context, state) {
           return SingleChildScrollView(
@@ -138,16 +120,15 @@ class _CreateInvoicePageState extends State<CreateInvoicePage> {
     debugPrint(
         "Create invoice: description=${_descriptionController.text}, amount=${_amountController.text}");
 
-    final cubit = context.read<NWCAccountCubit>();
+    // TODO: Access NWCAccountCubit instance from context
+
     final navigator = Navigator.of(context);
     var loaderRoute = createLoaderRoute(context);
     navigator.push(loaderRoute);
 
     try {
       await Future.delayed(const Duration(seconds: 3), () async {
-        await cubit.makeInvoice(
-            amountInSats: int.parse(_amountController.text),
-            description: _descriptionController.text);
+        // TODO: Call the makeInvoice method on NWCAccountCubit
       });
     } catch (error) {
       debugPrint('Error: $error');

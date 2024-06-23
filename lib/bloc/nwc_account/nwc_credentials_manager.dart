@@ -1,4 +1,4 @@
-import 'package:nostr_pay/services/keychain.dart';
+import 'package:nwc_app_final/services/keychain.dart';
 
 class NWCCredentialsManager {
   static const String accountSecret = "account_secret";

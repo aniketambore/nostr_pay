@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nostr_pay/component_library/component_library.dart';
+import 'package:nwc_app_final/component_library/component_library.dart';
 
 class BoxWidget extends StatelessWidget {
   const BoxWidget({

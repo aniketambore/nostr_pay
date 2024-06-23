@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nostr_pay/component_library/component_library.dart';
-import 'package:nostr_pay/routes/payment_dialogs/payment_request_dialog.dart';
+import 'package:nwc_app_final/component_library/component_library.dart';
+import 'package:nwc_app_final/routes/payment_dialogs/payment_request_dialog.dart';
 
 import 'processing_payment_content.dart';
 

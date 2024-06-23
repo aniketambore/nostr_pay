@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nostr_pay/component_library/src/themes/nwc_theme_data.dart';
+import 'package:nwc_app_final/component_library/src/themes/nwc_theme_data.dart';
 
 class NWCTheme extends InheritedWidget {
   const NWCTheme({
